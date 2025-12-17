@@ -15,7 +15,6 @@ import {
   ArrowRight,
   Star,
   Users,
-  Calendar,
   CreditCard,
   Target,
   Clock,
@@ -23,15 +22,33 @@ import {
   Layout
 } from 'lucide-react';
 
+// --- Utility Functions ---
+
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    const offset = 80; // Compensação para o header fixo
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = element.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+};
+
 // --- Components ---
 
 const CTAButton = ({ text = "QUERO ME BLINDAR AGORA", className = "" }: { text?: string, className?: string }) => (
-  <a 
-    href="#pricing"
-    className={`inline-flex items-center justify-center px-8 py-5 bg-emerald text-black font-black text-xl rounded-2xl animate-pulse-custom transition-all hover:scale-105 active:scale-95 shadow-xl shadow-emerald/20 ${className}`}
+  <button 
+    onClick={() => scrollToSection('pricing')}
+    className={`inline-flex items-center justify-center px-8 py-5 bg-emerald text-black font-black text-xl rounded-2xl animate-pulse-custom transition-all hover:scale-105 active:scale-95 shadow-xl shadow-emerald/20 cursor-pointer ${className}`}
   >
     {text} <ArrowRight className="ml-2 w-6 h-6" />
-  </a>
+  </button>
 );
 
 const SectionTitle = ({ title, subtitle, centered = true }: { title: string, subtitle?: string, centered?: boolean }) => (
@@ -134,7 +151,7 @@ const Identification = () => (
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[
-          { icon: <CreditCard />, title: "Cartão sempre no limite", desc: "Você paga the mínimo todo mês e os juros só aumentam a dívida." },
+          { icon: <CreditCard />, title: "Cartão sempre no limite", desc: "Você paga o mínimo todo mês e os juros só aumentam a dívida." },
           { icon: <Wallet />, title: "Salário que desaparece", desc: "O dinheiro entra e antes do dia 15 já acabou. Todo mês é a mesma coisa." },
           { icon: <Clock />, title: "Promessas não cumpridas", desc: "\"Mês que vem eu começo\" — só que esse mês nunca chega." },
           { icon: <Smartphone />, title: "Compras por impulso", desc: "Aquela promoção irresistível que depois vira arrependimento." },
@@ -294,7 +311,6 @@ const Bonus = () => (
           </div>
         ))}
         
-        {/* Adjusted Summary Card - Bright Emerald / High Contrast */}
         <div className="lg:col-span-1 bg-emerald p-8 rounded-[2.5rem] flex flex-col items-center justify-center text-center text-black shadow-[0_0_50px_-10px_rgba(16,185,129,0.5)]">
           <p className="font-bold uppercase tracking-widest text-xs mb-3">Valor total dos bônus:</p>
           <p className="text-4xl font-black line-through opacity-40 mb-1">R$ 305</p>
